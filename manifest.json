@@ -1,0 +1,17 @@
+{
+   "manifest_version": 2,
+
+   "name": "Session Savvy",
+   "description": "This extension lets you easily save browsing sessions.",
+
+   "version": "1.0",
+
+   "permissions": [
+      "storage"
+   ],
+
+   "browser_action": {
+      "default_icon":"icon.png",
+      "default_popup":"popup.html"
+   }
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Load previous browsing session</title>
+    <style>
+      body {
+        min-width: 357px;
+        overflow-x: hidden;
+      }
+
+      img {
+        margin: 5px;
+        border: 2px solid black;
+        vertical-align: middle;
+        width: 75px;
+        height: 75px;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script type="text/javascript">
+	function maketbl(names){
+	    var str="<table>";
+	    for(i=0;i<names.length;i++){
+		str=str+"<tr><th onmouseover='highlight(this)' onmouseout='unhighlight(this)' onmouseclick='opentabs()'>"+names[i]+"</th></tr>";
+	    }
+	    str=str+"</table>";
+	    document.getElementById("list").innerHTML=str;
+	}	
+
+	function fetch(){
+	    var names=localStorage["names"];
+	    if(names==undefined){
+		document.getElementById("list").innerHTML="<p>Use this extension to save your sessions!</p>";
+	    }
+	}
+
+	function highlight(x){
+	    x.backgroundColor="blue";
+	}
+
+	function unhighlight(x){
+	    x.backgroundColor="white";
+	}
+
+	function opentabs(){}
+	window.onload = function(){
+	    fetch();
+	}
+    </script>
+  </head>
+  <body>
+  Testing...
+  <div onload="fetch()" id="list"></div>
+  </body>
+</html>
