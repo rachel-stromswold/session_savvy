@@ -1,42 +1,47 @@
 function maketbl(names){
-  var str="<table>";
-  for(i=0;i<names.length;i++){
-		str=str+"<tr><th id='names[i]>"+names[i]+"</th></tr>";
-  }
-  str=str+"</table>";
-  document.getElementById("list").innerHTML=str;
-  
-  for(i=0;i<names.length;i++){
-  		item=document.getElementById(names[i]);
-		item.addEventListener("mouseover", function(){
-			item.backgroundColor="blue";
+	var tbl=document.getElementById("list");
+	var li=[];
+	for(i=0;i<names.length;i++){
+		li.push(document.createElement("li"));
+		var node=document.createTextNode(names[i]);
+		li[i].appendChild(node);
+		tbl.appendChild(li[i]);
+	
+		/*li[i].addEventListener("mouseover", function(){
+			li[i].backgroundColor="blue";
+			//document.write("baseball");
 		});
-		item.addEventListener("mouseout", function(){
-			item.backgroundColor="white";
+	
+		li[i].addEventListener("mouseout", function(){
+			li[i].backgroundColor="white";
+		});*/
+		
+		li[i].addEventListener("click", function(e){
+			var name=document.elementFromPoint(e.pageX, e.pageY).innerHTML;
+			alert(name);
+			//document.write(e.pageX);
+			//chrome.tabs.create({ url: "http://"+i+".com" });
 		});
-  }
+	}
 }
 
 function fetch(){
-  var names=localStorage["names"];
-  names="asdf;fjfjf;uiuiuiu;xdxD";
-  if(names==undefined){
-    document.getElementById("list").innerHTML="<p>Use this extension to save your sessions!</p>";
-  }else{
-	maketbl(names.split(";"));  
-  }
+	var names=localStorage["names"];
+	names="asdf;fjfjf;uiuiuiu;xdxD";
+	if(names==undefined){
+		document.getElementById("list").innerHTML="<p>Use this extension to save your sessions!</p>";
+	}else{
+		maketbl(names.split(";"));  
+	}
 }
 
 function highlight(x){
-  x.backgroundColor="blue";
+	x.backgroundColor="blue";
 }
 
 function unhighlight(x){
-  x.backgroundColor="white";
+	x.backgroundColor="white";
 }
-
-
-
 function opentabs(){}
 
 function savetabs(){}
