@@ -1,6 +1,7 @@
 function maketbl(names){
 	var tbl=document.getElementById("list");
 	var li=[];
+	
 	for(i=0;i<names.length;i++){
 		li.push(document.createElement("li"));
 		var node=document.createTextNode(names[i]);
@@ -18,21 +19,43 @@ function maketbl(names){
 		
 		li[i].addEventListener("click", function(e){
 			var name=document.elementFromPoint(e.pageX, e.pageY).innerHTML;
-			alert(name);
-			//document.write(e.pageX);
-			//chrome.tabs.create({ url: "http://"+i+".com" });
+			
+			if(localStorage[name]!=undefined){
+				var urls=localStorage[name].split(" ");
+				for(var i=0;i<urls.length;i++){
+					chrome.tabs.create({ url: urls[i] });
+				}
+			}
 		});
 	}
 }
 
 function fetch(){
 	var names=localStorage["names"];
-	names="asdf;fjfjf;uiuiuiu;xdxD";
+	
 	if(names==undefined){
 		document.getElementById("list").innerHTML="<p>Use this extension to save your sessions!</p>";
 	}else{
-		maketbl(names.split(";"));  
+		maketbl(names.split(";"));
 	}
+	
+	document.getElementById("save").addEventListener("click",function(){
+		var name=prompt("Please enter a name for this session", Date());
+		
+		if(names!=undefined){		
+			localStorage["names"]=localStorage["names"]+";"+name;
+		}else{
+			localStorage["names"]=name;		
+		}
+		
+		chrome.tabs.query({}, function(tabs){
+			var str="";
+			for(var i=0;i<tabs.length;i++){
+				str=str+" "+tabs[i].url;
+			}
+			localStorage[name]=str;
+		});
+	});
 }
 
 function highlight(x){
