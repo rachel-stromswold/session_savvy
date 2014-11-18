@@ -16,7 +16,9 @@ function maketbl(names){
 	    but.addEventListener("click", function(e){
 		if(confirm("Are you sure?")){
 		    var txt=document.elementFromPoint(20, e.pageY).innerHTML;
+		    localStorage["names"]=localStorage["names"].replace(";"+txt+";","");
 		    localStorage["names"]=localStorage["names"].replace(";"+txt,"");
+		    localStorage["names"]=localStorage["names"].replace(txt,"");
 		    localStorage.removeItem(txt);
 		}
 	    });
